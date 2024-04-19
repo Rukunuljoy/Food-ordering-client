@@ -1,19 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
+import { FaHeart } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Cards = ({ item }) => {
+
+    const [isHeartFilled, setIsHeartFilled] = useState(false)
+
+    const handleHeartClick = ()=>{
+        setIsHeartFilled(!isHeartFilled)
+    }
   return (
-    <div className="card w-96 bg-base-100 shadow-xl">
-      <figure>
-        <img
-          src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg"
-          alt="Shoes"
-        />
-      </figure>
+    <div className="card w-96 bg-base-100 shadow-xl relative">
+        <div className={`rating gap-1 absolute top-2 right-2 p-4 heartStar bg-green ${isHeartFilled ? "text-rose-500" : "text-white"}`}
+        onClick={handleHeartClick}
+        >
+            <FaHeart className="h-5 w-5 cursor-pointer"/>
+        </div>
+      <Link to={`/menu/${item._id}`}>
+        <figure>
+          <img
+            src={item.image}
+            alt="Shoes"
+            className="md:h-72 hover:rotate-[60deg] transition-all duration-500"
+          />
+        </figure>
+      </Link>
       <div className="card-body">
-        <h2 className="card-title">Shoes!</h2>
-        <p>If a dog chews shoes whose shoes does he choose?</p>
-        <div className="card-actions justify-end">
-          <button className="btn btn-primary">Buy Now</button>
+        <Link to={`/menu/${item._id}`}><h2 className="card-title ">{item.name}</h2></Link>
+        <p>{item.recipe}</p>
+        <div className="card-actions justify-between items-center mt-2">
+          <h5 className="font-semibold">
+            <span className="text-sm text-red">$</span>
+            {item.price}
+          </h5>
+          <button className="btn bg-green text-white">Buy Now</button>
         </div>
       </div>
     </div>
