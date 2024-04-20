@@ -10,7 +10,7 @@ const Cards = ({ item }) => {
         setIsHeartFilled(!isHeartFilled)
     }
   return (
-    <div className="card w-96 bg-base-100 shadow-xl relative">
+    <div to={`/menu/${item._id}`} className="card md:my-5 mr-5 shadow-xl relative">
         <div className={`rating gap-1 absolute top-2 right-2 p-4 heartStar bg-green ${isHeartFilled ? "text-rose-500" : "text-white"}`}
         onClick={handleHeartClick}
         >

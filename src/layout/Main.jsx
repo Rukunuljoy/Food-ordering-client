@@ -8,7 +8,10 @@ function Main() {
   return (
     <div>
         <Navbar/>
+        <div className='min-h-screen'>
+
         <Outlet/>
+        </div>
         <Footers/>
     </div>
   )
