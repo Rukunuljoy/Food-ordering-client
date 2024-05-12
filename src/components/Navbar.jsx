@@ -1,27 +1,29 @@
 import React, { useEffect, useState } from "react";
 import logo from "/logo.png";
 import { BiPhoneCall } from "react-icons/bi";
+import { FaUser } from "react-icons/fa";
+import Modal from "./Modal";
 
 const Navbar = () => {
-const [isSticky,setSticky] = useState(false)
+  const [isSticky, setSticky] = useState(false)
 
-// handle scroll function
-useEffect(()=>{
-  const handleScroll = ()=>{
-    const offset = window.scrollY;
-    if(offset>0){
-      setSticky(true)
-    }else{
-      setSticky(false)
+  // handle scroll function
+  useEffect(() => {
+    const handleScroll = () => {
+      const offset = window.scrollY;
+      if (offset > 0) {
+        setSticky(true)
+      } else {
+        setSticky(false)
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.addEventListener("scroll", handleScroll);
     }
-  };
-
-window.addEventListener("scroll", handleScroll);
-
-return ()=>{
-  window.addEventListener("scroll", handleScroll);
-}
-},[])
+  }, [])
 
 
 
@@ -103,7 +105,7 @@ return ()=>{
           <ul className="menu menu-horizontal px-1">{navItems}</ul>
         </div>
         <div className="navbar-end">
-         
+
           <button className="btn btn-ghost btn-circle hidden lg:flex">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -147,10 +149,13 @@ return ()=>{
               </div>
             </div>
           </div>
-          <a className="btn bg-green rounded-full px-6 text-white flex item-center gap-2 ml-4 ">
-            <BiPhoneCall />
-            Contact
-          </a>
+
+          {/* login button  */}
+          <button onClick={() => document.getElementById('my_modal_5').showModal()} className="btn bg-green rounded-full px-6 text-white flex item-center gap-2 ml-4 ">
+            <FaUser />
+            Login
+          </button>
+            <Modal/>
         </div>
       </div>
     </header>
