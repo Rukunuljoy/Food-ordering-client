@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 const Cards = ({ item }) => {
   const { name, image, price, recipe, _id } = item;
@@ -30,7 +30,7 @@ const Cards = ({ item }) => {
         email: user.email,
         recipe,
       };
-      // console.log(cartItem)
+      console.log(cartItem)
       fetch("http://localhost:5000/carts", {
         method: "POST",
         headers: {
@@ -40,8 +40,9 @@ const Cards = ({ item }) => {
       })
         .then((res) => res.json())
         .then((data) => {
-          // console.log(data);
+          console.log(data);
           if(data.insertedId){
+            refetch();
             Swal.fire({
               position: "top-center",
               icon: "success",
@@ -67,6 +68,7 @@ const Cards = ({ item }) => {
       });
     }
   };
+
   return (
     <div
       to={`/menu/${item._id}`}
