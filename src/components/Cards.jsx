@@ -3,9 +3,10 @@ import { FaHeart } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../contexts/AuthProvider";
 import Swal from "sweetalert2";
+import axios from "axios";
 
 const Cards = ({ item }) => {
-  const { name, image, price, recipe, _id } = item;
+  const { name, image, price, _id } = item;
   const [isHeartFilled, setIsHeartFilled] = useState(false);
   const { user } = useContext(AuthContext);
   // console.log(user);
@@ -17,57 +18,59 @@ const Cards = ({ item }) => {
     setIsHeartFilled(!isHeartFilled);
   };
 
-  //add to cart button
+  // add to cart handler
   const handleAddToCart = (item) => {
-    // console.log("btn is clicked", item)
-    if (user && user?.email) {
-      const cartItem = {
-        menuItemId: _id,
-        name,
-        quantity: 1,
-        image,
-        price,
-        email: user.email,
-        recipe,
-      };
-      console.log(cartItem)
-      fetch("http://localhost:5000/carts", {
-        method: "POST",
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(cartItem)
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data);
-          if(data.insertedId){
-            refetch();
+    // Destructure the item to get the necessary properties
+    const { _id, name, image, price } = item;
+  
+    // Check if the user is logged in
+    if (user && user.email) {
+      // Construct the cart item object
+      const cartItem = { menuItemId: _id, name, quantity: 1, image, price, email: user.email };
+  
+      // Make the POST request to add the item to the cart
+      axios.post('http://localhost:5000/carts', cartItem)
+        .then((response) => {
+          // Check if the response is successful
+          if (response.data) {
             Swal.fire({
-              position: "top-center",
-              icon: "success",
-              title: "Your work has been saved",
+              position: 'center',
+              icon: 'success',
+              title: 'Food added to the cart.',
               showConfirmButton: false,
               timer: 1500
             });
           }
+        })
+        .catch((error) => {
+          // Handle the error response
+          console.log(error.response.data.message);
+          const errorMessage = error.response.data.message;
+          Swal.fire({
+            position: 'center',
+            icon: 'warning',
+            title: errorMessage,
+            showConfirmButton: false,
+            timer: 1500
+          });
         });
-    }else{
+    } else {
+      // Show a warning if the user is not logged in
       Swal.fire({
-        title: "Please login?",
-        text: "Without an account can't able to add products",
-        icon: "warning",
+        title: 'Please login to order the food',
+        icon: 'warning',
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Signup Now!"
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Login now!'
       }).then((result) => {
         if (result.isConfirmed) {
-          navigate('/signup', {state: {from:location}});
+          navigate('/login', { state: { from: location } });
         }
       });
     }
   };
+  
 
   return (
     <div
@@ -86,7 +89,7 @@ const Cards = ({ item }) => {
         <figure>
           <img
             src={item.image}
-            alt="Shoes"
+            alt="images"
             className="md:h-72 hover:rotate-[60deg] transition-all duration-500"
           />
         </figure>

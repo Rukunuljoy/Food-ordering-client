@@ -10,6 +10,7 @@ import CartPage from "../pages/Shop/CartPage";
 import DashboardLayout from "../layout/DashboardLayout";
 import Dashboard from "../pages/dashboard/admin/Dashboard";
 import User from "../pages/dashboard/admin/User";
+import Login from "../pages/Shop/Login";
 
 const router = createBrowserRouter([
   {
@@ -36,12 +37,17 @@ const router = createBrowserRouter([
         path: "/cart-page",
         element: <CartPage />,
       },
+      {
+        path: "/login",
+        element: <Login />,
+      },
     ],
   },
   {
     path: "/signup",
     element: <SignUp />,
   },
+  
   {
     path: "/dashboard",
     element: (

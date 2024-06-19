@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import logo from "/logo.png";
 import { FaCartShopping } from "react-icons/fa6";
+import Login from "../pages/Shop/Login";
 
 const sharedLink = (
   <>
@@ -43,8 +44,11 @@ const sharedLink = (
 );
 
 const DashboardLayout = () => {
+  const isAdmin = true;
   return (
-    <div>
+   <div>
+    {
+      isAdmin?  <div>
       <div className="drawer sm:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col sm:items-start sm:justify-start my-2">
@@ -74,7 +78,7 @@ const DashboardLayout = () => {
           <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
             {/* Sidebar content here */}
             <li>
-              <Link to="/dashboard" className="flex justify-start mb-3">
+              <Link to="/" className="flex justify-start mb-3">
                 <img src={logo} alt="" className="w-20" />
                 <span className="badge badge-primary">Admin</span>
               </Link>
@@ -117,7 +121,9 @@ const DashboardLayout = () => {
           </ul>
         </div>
       </div>
-    </div>
+    </div> : <Login/>
+    }
+   </div>
   );
 };
 

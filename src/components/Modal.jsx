@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate,  } from "react-router-dom";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../contexts/AuthProvider";
+import axios from "axios";
 
 const Modal = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
@@ -20,25 +21,44 @@ const Modal = () => {
     // console.log(email, password);
     login(email, password).then((result)=>{
       const user = result.user;
-      alert("Login successful")
-      document.getElementById('my_modal_5').close()
-      navigate(from,{replace:true})
+      const userInfo = {
+        name: data.displayName,
+        email: data.email,
+      };
+      axios.post("http://localhost:5000/users", userInfo).then((response) => {
+        console.log(response);
+        alert("Login successful")
+        document.getElementById("my_modal_5").close();
+        navigate(from, { replace: true });
+      });
     }).catch((error)=>{
       const errorMessage = error.errorMessage;
       setErrorMessage("provide a correct email and password")
     })
+    reset();
   };
 
   
 
-    // google signin
-    const handleLogin = () => {
-      signUpWithGmail().then((result) => {
+  // google signin
+  const handleLogin = () => {
+    signUpWithGmail()
+      .then((result) => {
         const user = result.user;
-        alert("Login successfull!")
-        navigate(from, {replace: true})
-      }).catch((error) => console.log(error))
-    }
+        const userInfo = {
+          name: result?.user.displayName,
+          email: result?.user.email,
+        };
+        axios.post("http://localhost:5000/users", userInfo).then((response) => {
+          console.log(response);
+          alert("Account creation successful");
+          document.getElementById("my_modal_5").close();
+          navigate(from, { replace: true });
+        });
+      })
+      .catch((error) => console.log(error));
+  };
+
 
   return (
     <dialog id="my_modal_5" className="modal modal-middle sm:modal-middle">

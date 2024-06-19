@@ -1,48 +1,51 @@
-import React, { useContext } from "react";
-import { Link, useNavigate, useNavigation } from "react-router-dom";
+import React, {  useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaFacebook, FaGithub, FaGoogle } from "react-icons/fa";
 import { useForm } from "react-hook-form";
-import Modal from "./Modal";
-import { AuthContext } from "../contexts/AuthProvider";
-import { useLocation } from "react-router-dom";
-import axios from "axios";
-import useAxiosPublic from "../hooks/useAxiosPublic";
+import { AuthContext } from "../../contexts/AuthProvider";
+import Modal from "../../components/Modal";
+import useAxiosPublic from "../../hooks/useAxiosPublic";
+import useAuth from "../../hooks/useAuth";
 
-const SignUp = () => {
+const Login = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const { createUser, updateUserProfile, signUpWithGmail } = useContext(AuthContext);
-  const axiosPublic = useAxiosPublic();
+  const { signUpWithGmail, login } = useAuth(AuthContext);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // redirecting to home page or specifig page
   const location = useLocation();
   const navigate = useNavigate();
   const from = location.state?.from?.pathname || "/";
+  const axiosPublic = useAxiosPublic();
 
-  const onSubmit = data => {
+
+  const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
     // console.log(email, password);
-    createUser(email, password).then((result)=>{
-      const user = result.user;
-      updateUserProfile(data.email, data.photoURL).then(() => {
+    login(email, password)
+      .then((result) => {
+        const user = result.user;
         const userInfo = {
-          name: data.name,
+          name: data.displayName,
           email: data.email,
-        }
+        };
         axiosPublic.post("/users", userInfo).then((response) => {
           console.log(response);
-          alert("Account creation successful");
+          alert("Login successful");
           document.getElementById("my_modal_5").close();
           navigate(from, { replace: true });
         });
+      })
+      .catch((error) => {
+        const errorMessage = error.errorMessage;
+        setErrorMessage("provide a correct email and password");
       });
-    }).catch((error)=>{
-     console.log("provide a currect login error", error)
-    })
+    reset();
   };
 
   // google signin
@@ -64,28 +67,16 @@ const SignUp = () => {
       .catch((error) => console.log(error));
   };
 
-  // const onSubmit = data => console.log(data);
   return (
-    <div className="max-w-md bg-white w-full mx-auto shadow-lg flex items-center justify-center my-20">
+    <div className="max-w-md  bg-white w-full mx-auto shadow-lg flex items-center justify-center my-20">
       <div className="modal-action flex flex-col justify-center mt-0">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="card-body"
           method="dialog"
         >
-          <h3 className="font-bold text-xl">Create A Account!</h3>
-          {/* Name  */}
-          <div className="form-control">
-            <label className="label">
-              <span className="label-text">Name</span>
-            </label>
-            <input
-              type="name"
-              placeholder="name"
-              className="input input-bordered"
-              {...register("name")}
-            />
-          </div>
+          <h3 className="font-bold text-xl">Please Login!</h3>
+
           {/* email  */}
           <div className="form-control">
             <label className="label">
@@ -136,12 +127,6 @@ const SignUp = () => {
               Login
             </button>
           </p>
-          <Link
-            to="/"
-            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
-          >
-            ✕
-          </Link>
         </form>
 
         {/* social sign in  */}
@@ -165,4 +150,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;

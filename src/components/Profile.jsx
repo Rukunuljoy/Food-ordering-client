@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../contexts/AuthProvider";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Profile = ({ user }) => {
   const {logOut} = useContext(AuthContext)
@@ -58,6 +58,9 @@ const Profile = ({ user }) => {
             </li>
             <li>
               <a>Setting</a>
+            </li>
+            <li>
+              <Link to='/dashboard'>Dashboard</Link>
             </li>
             <li>
               <a onClick={handleLogout}>Logout</a>
