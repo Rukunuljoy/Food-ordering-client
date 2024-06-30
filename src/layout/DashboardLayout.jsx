@@ -13,6 +13,8 @@ import {
 import logo from "/logo.png";
 import { FaCartShopping } from "react-icons/fa6";
 import Login from "../pages/Shop/Login";
+import useAdmin from "../hooks/useAdmin";
+import useAuth from "../hooks/useAuth";
 
 const sharedLink = (
   <>
@@ -44,7 +46,9 @@ const sharedLink = (
 );
 
 const DashboardLayout = () => {
-  const isAdmin = true;
+  const {loading} = useAuth();
+  const [isAdmin, isAdminLoading] = useAdmin();
+
   return (
    <div>
     {
@@ -97,7 +101,7 @@ const DashboardLayout = () => {
               </Link>
             </li>
             <li>
-              <Link to="/dashboard">
+              <Link to="/dashboard/add-menu">
                 <FaPlusCircle />
                 Add Menu
               </Link>

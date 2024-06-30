@@ -19,7 +19,6 @@ const User = () => {
     })
     refetch();
   }
-
   const handleDeleteUser = (user) =>{
     axiosSecure.delete(`/users/${user._id}`).then(res => {
       alert(`${user.name} is now deleted from database`);
