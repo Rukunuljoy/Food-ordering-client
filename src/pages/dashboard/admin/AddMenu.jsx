@@ -1,7 +1,17 @@
 import React from "react";
 import { FaUtensils } from "react-icons/fa";
+import { useForm } from "react-hook-form"
+
 
 const AddMenu = () => {
+  const {
+    register,
+    handleSubmit,
+  } = useForm()
+
+  const onSubmit = (data) => {
+    console.log(data)
+  }
   return (
     <div className="w-full md:w-[870px] px-4 mx-auto">
       <h2 className="text-2xl font-semibold my-4">
@@ -10,7 +20,7 @@ const AddMenu = () => {
 
       {/* form here  */}
       <div>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control w-full">
             <div className="label">
               <span className="label-text">
@@ -19,6 +29,7 @@ const AddMenu = () => {
             </div>
             <input
               type="text"
+              {...register("name", { required: true })}
               placeholder="Recipe Name"
               className="input input-bordered w-full"
             />
@@ -32,8 +43,10 @@ const AddMenu = () => {
                   Category<span className="text-red">*</span>{" "}
                 </span>
               </label>
-              <select className="select select-bordered">
-                <option disabled selected>
+              <select 
+               {...register("category", { required: true })}
+              className="select select-bordered">
+                <option disabled defaultValue='default'>
                   Select a Category
                 </option>
                 <option value="salad">Salad</option>
@@ -53,6 +66,7 @@ const AddMenu = () => {
                 </span>
               </div>
               <input
+               {...register("price", { required: true })}
                 type="number"
                 placeholder="Recipe Name"
                 className="input input-bordered w-full"
@@ -65,6 +79,7 @@ const AddMenu = () => {
               <span className="label-text">Recipe Details</span>
             </label>
             <textarea
+             {...register("recipe", { required: true })}
               className="textarea textarea-bordered h-24"
               placeholder="Tell Us something about your recipe"
             ></textarea>
@@ -74,6 +89,7 @@ const AddMenu = () => {
           <div className="form-control w-full my-6 max-w-xs">
             <input
               type="file"
+              {...register("image", { required: true })}
               className="file-input w-full max-w-xs"
             />
           </div>
