@@ -1,17 +1,39 @@
 import React from "react";
 import { FaUtensils } from "react-icons/fa";
 import { useForm } from "react-hook-form"
+import useAxiosPublic from "../../../hooks/useAxiosPublic";
 
 
 const AddMenu = () => {
-  const {
-    register,
-    handleSubmit,
-  } = useForm()
+  const {register,handleSubmit} = useForm();
+  const axiosPublic = useAxiosPublic();
 
-  const onSubmit = (data) => {
+  // image hosting key 
+  const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+  // console.log(image_hosting_key)
+  const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+  const onSubmit = async(data) => {
     console.log(data)
+    const imagesFile = {image: data.image[0]}
+    const hostingImage = await axiosPublic.post(image_hosting_api, imagesFile, {
+      headers: {
+        'content-type' : "multipart/form-data"
+      }
+    });
+    // console.log(hostingImage)
+    if(hostingImage.data.success){
+      const menuItem = {
+        name: data.name,
+        category: data.category,
+        price: parseFloat(data.price),
+        recipe:data.recipe,
+        image:hostingImage.data.data.display_url
+      }
+      console.log(menuItem)
+    }
   }
+
+
   return (
     <div className="w-full md:w-[870px] px-4 mx-auto">
       <h2 className="text-2xl font-semibold my-4">
