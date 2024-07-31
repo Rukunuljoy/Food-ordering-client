@@ -7,7 +7,7 @@ const axiosPublic = useAxiosPublic();
     const {data: menu= [], isPending:loading, refetch} = useQuery({
         queryKey: ['menu'],
         queryFn: async () => {
-          const res = await axiosPublic.get("http://localhost:5000/menu");
+          const res = await axiosPublic.get("https://food-delivery-server-olive.vercel.app/menu");
           console.log(res.data)
           return res.data;
         },

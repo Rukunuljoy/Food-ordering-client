@@ -9,7 +9,7 @@ const token = localStorage.getItem('Access_token')
 const { refetch, data:cart = []} = useQuery({
     queryKey: ['carts', user?.email],
     queryFn: async () => {
-        const res = await fetch(`http://localhost:5000/carts?email=${user.email}`,{
+        const res = await fetch(`https://food-delivery-server-olive.vercel.app/carts?email=${user.email}`,{
             headers: {
                 authorization: `Bearer ${token}`
             }

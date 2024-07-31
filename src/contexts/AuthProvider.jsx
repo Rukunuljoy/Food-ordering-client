@@ -53,7 +53,7 @@ const AuthProvider = ({children}) => {
             setUser(currentUser);
             if(currentUser){
                 const userInfo = {email: currentUser.email}
-                axios.post('http://localhost:5000/jwt', userInfo)
+                axios.post('https://food-delivery-server-olive.vercel.app/jwt', userInfo)
                   .then( (response) =>{
                     // console.log(response.data.token);
                     if(response.data.token){
