@@ -17,7 +17,7 @@ const CartPage = () => {
 
   const handleIncrease = (item) => {
     // console.log(item._id)
-    fetch(`food-delivery-server-gray.vercel.app/carts/${item._id}`, {
+    fetch(`http://localhost:5000/carts/${item._id}`, {
       method: "PUT",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
@@ -43,7 +43,7 @@ const CartPage = () => {
   const handleDecrease = (item) => {
     // console.log(item._id)
     if (item.quantity > 1) {
-      fetch(`food-delivery-server-gray.vercel.app/carts/${item._id}`, {
+      fetch(`http://localhost:5000/carts/${item._id}`, {
         method: "PUT",
         headers: {
           "Content-type": "application/json; charset=UTF-8",
@@ -86,7 +86,7 @@ const CartPage = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.delete(`food-delivery-server-gray.vercel.app/carts/${item._id}`).then(response => {
+        axios.delete(`http://localhost:5000/carts/${item._id}`).then(response => {
           if (response) {
             refetch();
              Swal.fire("Deleted!", "Your file has been deleted.", "success");

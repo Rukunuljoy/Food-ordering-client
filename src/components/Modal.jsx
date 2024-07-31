@@ -25,7 +25,7 @@ const Modal = () => {
         name: data.displayName,
         email: data.email,
       };
-      axios.post("food-delivery-server-gray.vercel.app/users", userInfo).then((response) => {
+      axios.post("http://localhost:5000/users", userInfo).then((response) => {
         console.log(response);
         alert("Login successful")
         document.getElementById("my_modal_5").close();
@@ -49,7 +49,7 @@ const Modal = () => {
           name: result?.user.displayName,
           email: result?.user.email,
         };
-        axios.post("food-delivery-server-gray.vercel.app/users", userInfo).then((response) => {
+        axios.post("http://localhost:5000/users", userInfo).then((response) => {
           console.log(response);
           alert("Account creation successful");
           document.getElementById("my_modal_5").close();
