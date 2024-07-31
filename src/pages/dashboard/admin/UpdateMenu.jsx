@@ -5,7 +5,7 @@ import { useLoaderData, useNavigate } from 'react-router-dom';
 import useAxiosPublic from '../../../hooks/useAxiosPublic';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
-
+import LoadingSpinner from '../../../components/LoadingSpinner';
 
 const UpdateMenu = () => {
     const {register,handleSubmit, reset} = useForm();
@@ -18,6 +18,7 @@ const UpdateMenu = () => {
     const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
     // console.log(image_hosting_key)
     const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`
+    
     const onSubmit = async(data) => {
       // console.log(data)
       const imagesFile = {image: data.image[0]}
@@ -52,7 +53,11 @@ const UpdateMenu = () => {
       }
     }
   
-console.log(item)
+    // Check if item is loaded
+    if (!item) {
+      return <LoadingSpinner/>;
+    }
+
     return (
         <div className="w-full md:w-[870px] px-4 mx-auto">
       <h2 className="text-2xl font-semibold my-4">

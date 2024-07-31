@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import App from "../App";
 import Main from "../layout/Main";
 import Home from "../pages/home/Home";
 import Menu from "../pages/Shop/Menu";
@@ -14,6 +13,8 @@ import Login from "../pages/Shop/Login";
 import AddMenu from "../pages/dashboard/admin/AddMenu";
 import ManageItems from "../pages/dashboard/admin/ManageItems";
 import UpdateMenu from "../pages/dashboard/admin/UpdateMenu";
+import Order from "../pages/dashboard/Order";
+import Payment from "../pages/Shop/Payment";
 
 const router = createBrowserRouter([
   {
@@ -41,8 +42,16 @@ const router = createBrowserRouter([
         element: <CartPage />,
       },
       {
+        path: "/order",
+        element: <PrivateRouter><Order /></PrivateRouter>,
+      },
+      {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/process-checkout",
+        element: <Payment />,
       },
     ],
   },
@@ -78,7 +87,7 @@ const router = createBrowserRouter([
       {
         path:"update-menu/:id",
         element: <UpdateMenu/>,
-        loader:({params})=>fetch(`http://localhost:5000/menu/${params.id}`)
+        loader:({params})=>fetch(`food-delivery-server-gray.vercel.app/menu/${params._id}`)
       }
     ],
   },

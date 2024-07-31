@@ -29,7 +29,7 @@ const Cards = ({ item }) => {
       const cartItem = { menuItemId: _id, name, quantity: 1, image, price, email: user.email };
   
       // Make the POST request to add the item to the cart
-      axios.post('http://localhost:5000/carts', cartItem)
+      axios.post('food-delivery-server-gray.vercel.app/carts', cartItem)
         .then((response) => {
           // Check if the response is successful
           if (response.data) {
