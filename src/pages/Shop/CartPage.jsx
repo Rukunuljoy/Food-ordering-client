@@ -21,7 +21,7 @@ const CartPage = () => {
       method: "PUT",
       headers: {
         "Content-type": "application/json; charset=UTF-8",
-      },
+      }, 
       body: JSON.stringify({ quantity: item.quantity + 1 }),
     })
       .then((res) => res.json())
