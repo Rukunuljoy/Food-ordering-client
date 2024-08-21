@@ -1,12 +1,38 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
-import React from "react";
+import React, { useState } from "react";
 import { FaPaypal } from "react-icons/fa";
 
 const CheckoutForm = ({ price, cart }) => {
   const stripe = useStripe();
   const elements = useElements();
+  const [cartError, setCartError] = useState('');
 
-  const handleSubmit = async (event) => {};
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!stripe || !elements) {
+        return;
+      }
+
+    //   create a cart elements  
+      const card = elements.getElement(CardElement);
+
+      if (card == null) {
+        return;
+      }
+      const {error, paymentMethod} = await stripe.createPaymentMethod({
+        type: 'card',
+        card,
+      });
+  
+      if (error) {
+        console.log('[error]', error);
+        setCartError(error.message)
+      } else {
+        setCartError("Success")
+        console.log('[PaymentMethod]', paymentMethod);
+      }
+  };
 
   return (
     <div className="flex flex-col sm:flex-row justify-start items-start gap-8">
@@ -45,6 +71,7 @@ const CheckoutForm = ({ price, cart }) => {
           >
             Pay Now
           </button>
+          {cartError && <div style={{ color: 'red' }}>{cartError}</div>}
         </form>
 
         {/* paypal option  */}
