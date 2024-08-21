@@ -186,7 +186,7 @@ const CartPage = () => {
             </table>
           </div>
 
-          {/* customer detials  */}
+          {/* customer Details  */}
           <div className="my-12 flex flex-col md:flex-row justify-between items-center">
             <div className="md:w-1/2 space-y-3">
               <h3 className="font-medium">Customer Details</h3>
