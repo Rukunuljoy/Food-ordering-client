@@ -4,6 +4,7 @@ import { AuthContext } from '../../contexts/AuthProvider';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 
+
 const UpdateProfile = () => {
     const {updateUserProfile} = useContext(AuthContext)
     const {
@@ -12,7 +13,7 @@ const UpdateProfile = () => {
         formState: { errors },
       } = useForm()
 
-          // redirecting to home page or specifig page
+          // redirecting to home page or specific page
           const location = useLocation();
           const navigate = useNavigate();
           const from = location.state?.from?.pathname || "/";

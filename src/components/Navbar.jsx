@@ -47,12 +47,6 @@ const Navbar = () => {
             <li>
               <a href="/menu">All</a>
             </li>
-            <li>
-              <a>Salad</a>
-            </li>
-            <li>
-              <a>Pizza</a>
-            </li>
           </ul>
         </details>
       </li>
@@ -60,12 +54,6 @@ const Navbar = () => {
         <details>
           <summary>Services</summary>
           <ul className="p-2">
-            <li>
-              <a>Online Order</a>
-            </li>
-            <li>
-              <a>Table Booking</a>
-            </li>
             <li>
               <a>Order tracking</a>
             </li>
