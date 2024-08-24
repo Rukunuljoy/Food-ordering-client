@@ -18,7 +18,7 @@ const CheckoutForm = ({ price, cart }) => {
     }
   
     axiosSecure
-      .post("https://food-delivery-server-olive.vercel.app/create-payment-intent", {
+      .post("/create-payment-intent", {
         price: price, // Sending price directly
       })
       .then((res) => {
