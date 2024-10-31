@@ -52,7 +52,7 @@ const AddMenu = () => {
   return (
     <div className="w-full md:w-[870px] px-4 mx-auto">
       <h2 className="text-2xl font-semibold my-4">
-        Upload A New <span className="text-green">Menu Item</span>
+        Add A New <span className="text-green">Menu Item</span>
       </h2>
 
       {/* form here  */}

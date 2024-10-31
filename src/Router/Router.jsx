@@ -85,9 +85,9 @@ const router = createBrowserRouter([
         element:<ManageItems/>
       },
       {
-        path:"update-menu/:id",
-        element: <UpdateMenu/>,
-        loader:({params})=>fetch(`https://food-delivery-server-olive.vercel.app/menu/${params._id}`)
+        path: "update-menu/:_id",
+        element: <UpdateMenu />,
+        loader: ({ params }) => fetch(`https://food-delivery-server-olive.vercel.app/menu/${params._id}`)
       }
     ],
   },
