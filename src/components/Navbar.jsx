@@ -93,10 +93,10 @@ const Navbar = () => {
           </Link>
         </div>
 
-        {/* Desktop Menu */}
-        <div className="navbar-center  lg:flex">
-          <ul className="menu menu-horizontal px-1">{navItems}</ul>
-        </div>
+     {/* Desktop Menu */}
+<div className="navbar-center hidden lg:flex">
+  <ul className="menu menu-horizontal px-1">{navItems}</ul>
+</div>
 
         {/* Navbar End */}
         <div className="navbar-end">
